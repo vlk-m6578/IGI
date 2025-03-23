@@ -1,5 +1,6 @@
 from input import input_agreement
 
+
 def count_of_words(str):
     """
     The number of words starting with a lower and consonant letter 
@@ -11,6 +12,7 @@ def count_of_words(str):
             count += 1
     return count
 
+
 def run_task3():
     while True:
         str = input("Enter string: ")
@@ -21,3 +23,4 @@ def run_task3():
 
         if not input_agreement("\nContinue? (y/n): "):
             break
+

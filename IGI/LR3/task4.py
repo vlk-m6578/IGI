@@ -32,8 +32,6 @@ def analyze():
         '3': longest_word
     }
 
-
-
 def run_task4():
     result = analyze()
 

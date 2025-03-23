@@ -25,7 +25,7 @@ def calculate(x, eps, max_iter = 500):
     while n < max_iter and abs(term)>eps:
         term *= x/n
         result += term
-        n +=1
+        n += 1
 
     return result, n, math_result
 

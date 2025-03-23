@@ -1,5 +1,6 @@
 from input import input_int, input_agreement
 
+
 def sum():
     """
     Calculate sum of numbers until value > 100
@@ -11,6 +12,7 @@ def sum():
             break
         sum += num
     return sum
+
 
 def run_task2():
     while True:
