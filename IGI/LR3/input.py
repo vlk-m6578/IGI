@@ -6,6 +6,7 @@ def input_int(value):
         except ValueError:
             print("Invalid input. Try again: ")
 
+
 def input_float(value):
     """Get validated float input from user"""
     while True:
@@ -13,6 +14,20 @@ def input_float(value):
             return float(input(value))
         except ValueError:
             print("Invalid input. Try again: ")
+
+
+def input_int_positive(value):
+    """Get validated int positive input from user"""
+    while True:
+        try:
+            num = int(input(value))
+            if num > 0:
+                return num 
+            else:
+                print("Number must be positive. Try again.")
+        except ValueError:
+            print("Invalid input. Try again: ")
+
 
 def input_agreement(value):
     """Get validated yes/no input from user"""

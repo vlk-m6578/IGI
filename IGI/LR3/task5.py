@@ -1,4 +1,4 @@
-from input import input_agreement, input_int, input_float
+from input import input_agreement, input_int, input_float, input_int_positive
 
 def input_list():
     """
@@ -7,7 +7,7 @@ def input_list():
             list
     """
     lst = []
-    n = input_int("Enter list size: ")
+    n = input_int_positive("Enter list size: ")
     for i in range(n):
         while True:
             num = input_float(f"Element {i}: ")
@@ -26,10 +26,10 @@ def task_with_list(lst):
         tuple: (count, sum)
     """
     count = sum(1 for i in lst if i == 0)
-
-    min_abs = min(abs(i) for i in lst)
-    min_no_abs = min(i for i in lst)
-    min_index = lst.index(min_no_abs)
+    
+    lst_abs = [abs(i) for i in lst]
+    min_abs = min(abs(i) for i in lst_abs)
+    min_index = lst_abs.index(min_abs)
     sum_after_zero = sum(lst[min_index + 1:]) if min_index + 1 < len(lst) else 0
 
     return count, sum_after_zero

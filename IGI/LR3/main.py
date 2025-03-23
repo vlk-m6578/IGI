@@ -11,6 +11,7 @@ from task3 import run_task3
 from task4 import run_task4
 from task5 import run_task5
 
+
 def show_menu():
     """Display main menu"""
     print("\n" + "=" *30)
@@ -22,6 +23,7 @@ def show_menu():
     print("5. task5")
     print("6. Exit")
     print("=" *30)
+
 
 def main():
     """Main program"""
