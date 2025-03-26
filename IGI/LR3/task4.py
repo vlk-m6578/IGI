@@ -5,6 +5,8 @@ def analyze():
         1. how many words have maximum length
         2. display all words followed by a comma or point
         3. find the longest word that ends with 'e'
+    Returns:
+        dict: (max_length_count, right_words, longest_word)
     """
     text = "So she was considering in her own mind, as well as she could, for the hot day made her feel very sleepy and stupid, whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her."
     expressions = text.split()
@@ -19,7 +21,7 @@ def analyze():
     right_words = []
     for expr in expressions:
         word = expr.rstrip(',.')
-        if len(word) < len(expr):
+        if len(word)<len(expr):
             right_words.append(word)
 
     #3.

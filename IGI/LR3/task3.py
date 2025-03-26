@@ -3,11 +3,13 @@ from input import input_agreement
 def count_of_words(str):
     """
     The number of words starting with a lower and consonant letter 
+    Returns:
+        count(int): The number of necessary words
     """
     consonant = set('qwrtpsdfghjklzxcvbnm')
     count = 0
     for word in str.split():
-        if len(word) > 0 and word[0].islower() and word[0] in consonant:
+        if len(word)>0 and word[0].islower() and word[0] in consonant:
             count += 1
     return count
 

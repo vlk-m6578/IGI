@@ -22,10 +22,10 @@ def calculate(x, eps, max_iter = 500):
     term = 1.0
     math_result = math.exp(x)
 
-    while n < max_iter and abs(term)>eps:
+    while n<max_iter and abs(term)>eps:
         term *= x/n
         result += term
-        n +=1
+        n += 1
 
     return result, n, math_result
 
