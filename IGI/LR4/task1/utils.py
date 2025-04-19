@@ -1,7 +1,7 @@
 """
 Utility functions for Task 1.
 """
-from task1_serialization.models import RationalNumber
+from task1.models import RationalNumber
 
 def input_rational(prompt: str) -> RationalNumber:
     """

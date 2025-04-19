@@ -1,0 +1,12 @@
+total_sentences: 13
+declarative_sentences: 7
+interrogative_sentences: 1
+exclamatory_sentences: 5
+avg_sentence_length: 21
+avg_word_length: 5
+smiles_count: 2
+phones: ['29', '29', '29']
+filtered_words: ['звоните', 'срочно', 'слова', 'для', 'анализа', 'слон', 'крот', 'плита', 'брат', 'дверь', 'стол', 'опаздывайте', 'смайлы', 'просто', 'что', 'срочно', 'проверьте']
+consonant_endings_count: 16
+seventh_words: ['й', 'акция', 'метро', 'карта', 'опаздывайте', 'отличная', 'не', 'час']
+words_with_avg_length: ['акция', 'слова', 'плита', 'метро', 'карта', 'дверь', 'текст', 'какой']

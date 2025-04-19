@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 import csv
 import pickle
 from typing import Dict
-from task1_serialization.models import RationalNumber
+from task1.models import RationalNumber
 
 class Serializer(ABC):
     """Abstract base class for serializers."""

@@ -1,8 +1,8 @@
 
 from typing import Dict
-from task1_serialization.utils import input_rational, validate_input
-from task1_serialization.serializers import CSVSerializer, PickleSerializer
-from task1_serialization.models import RationalNumber
+from task1.utils import input_rational, validate_input
+from task1.serializers import CSVSerializer, PickleSerializer
+from task1.models import RationalNumber
 
 class RationalController:
     """Controller class for managing rational numbers operations."""
