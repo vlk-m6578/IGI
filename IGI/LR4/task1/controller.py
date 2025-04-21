@@ -24,6 +24,7 @@ class RationalController:
             print("4. Serialize data")
             print("5. Deserialize data")
             print("6. Display numbers")
+            print("7. Sort numbers")
             print("0. Return to Main Menu")
             choice = input("Enter your choice: ")
 
@@ -37,6 +38,8 @@ class RationalController:
                 self.handle_serialization(choice)
             elif choice == "6":
                 self.display_numbers()
+            elif choice == "7":
+                self.sort_numbers()
             elif choice == "0":
                 break
             else:
@@ -96,6 +99,12 @@ class RationalController:
         """Display all stored numbers."""
         for key, value in self.numbers.items():
             print(f"{key}: {value}")
+
+    def sort_numbers(self):
+        """Sort numbers in ascending order."""
+        sorted_items = sorted(self.numbers.items(), key=lambda x: x[1])
+        self.numbers = dict(sorted_items)
+        print("Numbers sorted successfully.")
         
 
 

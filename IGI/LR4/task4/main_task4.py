@@ -51,6 +51,9 @@ def create_square():
         
         # Вывод на экран
         plt.show()
+
+        square = Square(radius, color)
+        print("\n" + str(square))
         
     except Exception as e:
         print(f"Error: {str(e)}")

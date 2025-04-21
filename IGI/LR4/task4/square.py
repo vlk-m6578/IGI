@@ -12,6 +12,7 @@ class Square(GeometricShape):
     shape_name = "Square"
 
     def __init__(self, radius: float, color: str):
+        super().__init__()
         if radius <= 0:
             raise ValueError("Radius must be positive")
         self._radius = radius

@@ -39,3 +39,6 @@ class RationalNumber:
     def __str__(self) -> str:
         """String representation of the rational number."""
         return f"{self.numerator}/{self.denominator}"
+    
+    def __lt__(self, other: 'RationalNumber') -> bool:
+        return (self.numerator * other.denominator) < (other.numerator * self.denominator)
