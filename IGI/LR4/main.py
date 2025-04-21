@@ -12,6 +12,7 @@ Main module to run all laboratory tasks.
 from task1.controller import RationalController
 from task2.text_analysis_controller import TextAnalysisController
 from task3.controller import SeriesAnalysisController
+from task4.main_task4 import create_square
 
 def main_menu():
     while True:
@@ -19,6 +20,7 @@ def main_menu():
         print("1. Task 1: Rational Numbers Serialization.")
         print("2. Task 2: Text Analysis")
         print("3. Task 3: Series Expansion")
+        print("4. Task 4: Square")
         print("0. Exit")
         choice = input("Enter your choice: ")
 
@@ -28,6 +30,8 @@ def main_menu():
             run_text_analysis()
         elif choice == "3":
             SeriesAnalysisController().run_analysis()
+        elif choice == "4":
+            create_square()
         elif choice == "0":
             print("Exiting program...")
             break
