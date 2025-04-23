@@ -10,7 +10,7 @@ from task3.plotter import SeriesPlotter
 class SeriesAnalysisController:
     """Manages complete series analysis workflow."""
 
-    def __int__(self):
+    def __init__(self):
         self.calculator = None
         self.plotter = None
 

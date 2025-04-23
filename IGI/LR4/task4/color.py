@@ -1,17 +1,26 @@
-class Color:
-    """Handles color property for shapes."""
+import matplotlib.colors as mcolors
+
+class ColorValidatorMixin:
+    
+    def _validate_color(self, color: str) -> str:
+        try:
+            return mcolors.to_hex(color)
+        except ValueError:
+            raise ValueError(f"Invalid color: {color}")
+
+class Color(ColorValidatorMixin):
     
     def __init__(self, color: str):
-        self._color = color
+        self._color = self._validate_color(color) 
 
     @property
     def color(self) -> str:
-        """Get color name."""
         return self._color
     
     @color.setter
     def color(self, value: str):
-        """Set color name with validation."""
-        if not isinstance(value, str):
-            raise ValueError("Color must be a string")
-        self._color = value
+        self._color = self._validate_color(value)
+
+    @color.getter
+    def color(self):
+        return self._color

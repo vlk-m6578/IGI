@@ -1,5 +1,4 @@
 
-
 class RationalNumber:
     """Class representing a rational number with numerator and denominator."""
     

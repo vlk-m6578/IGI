@@ -3,7 +3,6 @@ Manages file operations and directory creation.
 """
 
 from pathlib import Path
-import json
 
 class FileHandler:
     """Handles file saving operations."""

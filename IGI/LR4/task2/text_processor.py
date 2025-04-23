@@ -13,7 +13,7 @@ class TextProcessor:
 
     @property
     def text(self) -> str:
-        """Возвращает исходный текст."""
+        """Return text."""
         return self._text
 
     def _split_sentences(self) -> List[str]:

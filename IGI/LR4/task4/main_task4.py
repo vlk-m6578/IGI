@@ -12,12 +12,10 @@ def create_square():
         
         square = Square(radius, color)
         side = square.side_length
-        center = side / 2  # Центр квадрата и окружности
-        
-        # Создание графика
+        center = side / 2  # Center
+        # Create
         fig, ax = plt.subplots()
         
-        # Окружность (рисуется ПОД квадратом)
         circle = Circle(
             (center, center), 
             radius,
@@ -27,29 +25,29 @@ def create_square():
         )
         ax.add_patch(circle)
         
-        # Квадрат
+        # Square
         square_plot = Rectangle(
             (0, 0), side, side,
             edgecolor=color, 
-            fill=False, 
+            facecolor=color,   
+            fill=True, 
             linewidth=2
         )
         ax.add_patch(square_plot)
         
-        # Подпись и настройки
+        # Settings
         ax.annotate(label, (center, center),
                     ha='center', va='center', fontsize=12)
         plt.xlim(center - radius - 1, center + radius + 1)
         plt.ylim(center - radius - 1, center + radius + 1)
         plt.gca().set_aspect('equal')
         
-        # Сохранение в файл
+        # Save
         plt.savefig("square.png")
         print("Square saved to square.png")
 
         plt.title("Square Inscribed in Circle")
         
-        # Вывод на экран
         plt.show()
 
         square = Square(radius, color)
