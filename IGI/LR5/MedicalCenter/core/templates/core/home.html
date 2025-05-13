@@ -1,0 +1,84 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+<!-- Герой-секция -->
+<section class="hero-section mb-5">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h1 class="display-4">Ваше здоровье - наш приоритет</h1>
+            <p class="lead">Современные методики лечения и опытные специалисты</p>
+            <a href="/services" class="btn btn-primary btn-lg">Наши услуги</a>
+        </div>
+        <div class="col-md-6">
+            <img src="{% static 'img/hero-image.jpg' %}" class="img-fluid rounded" alt="Клиника">
+        </div>
+    </div>
+</section>
+
+<!-- Последние новости -->
+<section class="news-section">
+    <h2 class="mb-4">Последние новости</h2>
+    <div class="row">
+        {% for news in latest_news %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if news.image %}
+                <img src="{{ news.image.url }}" 
+                     class="card-img-top" 
+                     alt="{{ news.title }}"
+                     style="height: 200px; object-fit: cover;">
+                {% else %}
+                <img src="{% static 'img/default-news.jpg' %}" 
+                     class="card-img-top" 
+                     alt="Default image"
+                     style="height: 200px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ news.title }}</h5>
+                    <p class="card-text">{{ news.short_content }}</p>
+                    <a href="{% url 'news-detail' news.pk %}" 
+                       class="btn btn-primary stretched-link">
+                        Читать далее →
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">Новостей пока нет</div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="glossary-section mt-5">
+    <h2 class="mb-4">Словарь терминов</h2>
+    <div class="accordion" id="glossaryAccordion">
+        {% for term in glossary_terms %}
+        <div class="accordion-item">
+            <h3 class="accordion-header">
+                <button class="accordion-button collapsed" 
+                        type="button" 
+                        data-bs-toggle="collapse" 
+                        data-bs-target="#term{{ term.id }}">
+                    {{ term.term }}
+                </button>
+            </h3>
+            <div id="term{{ term.id }}" 
+                 class="accordion-collapse collapse" 
+                 data-bs-parent="#glossaryAccordion">
+                <div class="accordion-body">
+                    {{ term.definition|linebreaks }}
+                    <small class="text-muted">
+                        Добавлено: {{ term.date_added|date:"d.m.Y" }}
+                    </small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

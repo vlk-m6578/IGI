@@ -1,0 +1,36 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Наши врачи{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Наши специалисты</h2>
+    <div class="row">
+        {% for doctor in doctors %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+                {% if doctor.photo %}
+                <img src="{{ doctor.photo.url }}" 
+                     class="card-img-top" 
+                     alt="{{ doctor.full_name }}"
+                     style="height: 250px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ doctor.full_name }}</h5>
+                    <p class="card-text">
+                        <span class="badge bg-primary">
+                            {{ doctor.department.name }}
+                        </span><br>
+                    </p>
+                    <a href="{% url 'doctor-detail' doctor.pk %}" 
+                       class="btn btn-primary stretched-link">
+                        Подробнее
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
