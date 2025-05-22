@@ -8,30 +8,85 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- Подключение Bootstrap через CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Иконки Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 <body>
     <!-- Шапка -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
-        <a class="navbar-brand" href="/">MedCare</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Главная</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">О нас</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'services' %}">Услуги</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'doctors' %}">Врачи</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'privacy-policy' %}">Политика конфиденциальности</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'promocodes' %}">Промокоды</a></li>
-            </ul>
-            <div class="d-flex">
-                <a href="/login" class="btn btn-light">Войти</a>
+        <div class="container">
+            <a class="navbar-brand" href="/">MedCare</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Главная</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'set-timezone' %}">
+                            <i class="bi bi-clock me-1"></i>Временная зона
+                        </a>
+                    </li>
+                {% endif %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">О нас</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'services' %}">Услуги</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'doctors' %}">Врачи</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'privacy-policy' %}">Политика</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'promocodes' %}">Промокоды</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'vacancy-list' %}">Вакансии</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'statistics' %}">Статистика</a></li>
+                    
+                    <!-- Кнопки личных кабинетов -->
+                    {% if user.is_authenticated %}
+                        {% if user.groups.all.0.name == 'Doctors' %}
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-light ms-2" href="{% url 'doctor-dashboard' %}">
+                                <i class="bi bi-clipboard-pulse"></i> Кабинет врача
+                            </a>
+                        </li>
+                        {% elif user.groups.all.0.name == 'Clients' %}
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-light ms-2" href="{% url 'client-dashboard' %}">
+                                <i class="bi bi-person-circle"></i> Личный кабинет
+                            </a>
+                        </li>
+                        {% endif %}
+                    {% endif %}
+                </ul>
+                
+                <div class="d-flex">
+                    {% if user.is_authenticated %}
+                        <div class="dropdown">
+                            <button class="btn btn-light dropdown-toggle" 
+                                    type="button" 
+                                    id="userMenu" 
+                                    data-bs-toggle="dropdown" 
+                                    aria-expanded="false">
+                                {% if user.first_name or user.last_name %}
+                                    {{ user.get_full_name }}
+                                {% else %}
+                                    {{ user.username }}
+                                {% endif %}
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                                <li>
+                                    <form method="post" action="{% url 'logout' %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item">
+                                            <i class="bi bi-box-arrow-right me-2"></i>Выйти
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-light">Войти</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
     <!-- Основной контент -->
     <main class="container mt-4">

@@ -1,5 +1,13 @@
 from django.contrib import admin
-from .models import *
+from django.contrib.auth.admin import UserAdmin, GroupAdmin
+from django.contrib.auth.models import User, Group
+from .models import (
+    GroupProxy, 
+    Client, Doctor, News, Employee, Vacancy,
+    GlossaryTerm, Department, Specialization,
+    Service, Appointment, PromoCode, Review,
+    UserProfile,
+)
 
 class ClientAdmin(admin.ModelAdmin):
     list_display = ('user', 'phone', 'birth_date')
@@ -7,7 +15,7 @@ class ClientAdmin(admin.ModelAdmin):
 
 @admin.register(Doctor)
 class DoctorAdmin(admin.ModelAdmin):
-    filter_horizontal = ('specializations', 'services')  # Добавляем services
+    filter_horizontal = ('specializations', 'services') 
     list_display = ('full_name', 'department', 'experience')
     search_fields = ('full_name', 'license_number')
     
@@ -24,19 +32,23 @@ class DoctorAdmin(admin.ModelAdmin):
         }),
     )
 
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        if not change:  # только при создании нового доктора
+            clients_group = Group.objects.get(name='Clients')
+            obj.user.groups.remove(clients_group)
+
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
     list_display = ('title', 'publish_date')
 
-# Убрали дублирующиеся модели из списка
-admin.site.register([Employee, Vacancy])  # PromoCode и Review убраны
+admin.site.register([Employee, Vacancy])
 
 @admin.register(GlossaryTerm)
 class GlossaryAdmin(admin.ModelAdmin):
     list_display = ('term', 'date_added')
     search_fields = ('term', 'definition')
 
-# Регистрируем оставшиеся модели
 admin.site.register(Client, ClientAdmin)
 admin.site.register(Department)
 admin.site.register(Specialization)
@@ -53,3 +65,25 @@ class PromoCodeAdmin(admin.ModelAdmin):
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('user', 'rating', 'date')
     list_filter = ('rating', 'date')
+
+@admin.register(GroupProxy)
+class CustomGroupAdmin(GroupAdmin):
+    list_display = ('name', 'get_users_count')
+    
+    def get_users_count(self, obj):
+        return obj.user_set.count()
+    get_users_count.short_description = 'Количество пользователей'
+
+class CustomUserAdmin(UserAdmin):
+    list_display = ('username', 'email', 'get_groups', 'is_staff')
+    
+    def get_groups(self, obj):
+        return ", ".join([g.name for g in obj.groups.all()])
+    get_groups.short_description = 'Группы'
+
+admin.site.unregister(User)
+admin.site.register(User, CustomUserAdmin)
+
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'timezone')

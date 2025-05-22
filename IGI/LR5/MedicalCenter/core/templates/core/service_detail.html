@@ -1,0 +1,43 @@
+<!-- core/templates/core/service_detail.html -->
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ service.name }}</h2>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Описание услуги</h5>
+                    <p class="card-text">{{ service.full_description }}</p>
+                    <p class="h4">{{ service.price }} руб.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Записаться</h5>
+                    <form method="post" action="{% url 'book-appointment' service.pk %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Выберите врача:</label>
+                            <select name="doctor" class="form-select" required>
+                                {% for doctor in service.doctors.all %}
+                                <option value="{{ doctor.pk }}">{{ doctor.full_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Дата и время:</label>
+                            <input type="datetime-local" name="date_time" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Записаться</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
