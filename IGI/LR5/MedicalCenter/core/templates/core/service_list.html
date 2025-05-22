@@ -1,0 +1,33 @@
+<!-- core/templates/core/service_list.html -->
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Наши услуги</h2>
+    
+    <div class="row">
+        {% for service in object_list %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ service.name }}</h5>
+                    <p class="card-text">{{ service.short_description }}</p>
+                    <a href="{% url 'service-detail' service.pk %}" 
+                       class="btn btn-primary stretched-link">
+                        {% if user.groups.exists and user.groups.first.name == 'Doctors' %}
+                            Подробнее
+                        {% else %}
+                            Подробнее и запись
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">Услуги не найдены</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

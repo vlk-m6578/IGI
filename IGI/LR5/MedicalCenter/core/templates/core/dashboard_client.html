@@ -1,0 +1,76 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Личный кабинет клиента</h2>
+    
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Ваши записи</h5>
+                    {% for appointment in appointments %}
+                    <div class="card mb-3 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6 class="card-title text-primary">
+                                        {{ appointment.service.name }}
+                                    </h6>
+                                    <p class="card-text">
+                                        <span class="text-muted">Врач:</span> 
+                                        {{ appointment.doctor.full_name }}<br>
+                                        <span class="text-muted">Дата:</span> 
+                                        {{ appointment.date_time|date:"d.m.Y H:i" }}<br>
+                                        <span class="text-muted">Статус:</span> 
+                                        {% if appointment.is_completed %}
+                                            <span class="badge bg-success">Завершен</span>
+                                        {% else %}
+                                            <span class="badge bg-warning text-dark">Запланирован</span>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <div class="text-end">
+                                    <div class="h5 text-dark">
+                                        {{ appointment.service.price }} руб.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="alert alert-info">У вас пока нет записей</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Управление профилем</h5>
+                    <a href="{% url 'update-profile' %}" class="btn btn-primary btn-block mb-3">
+                        Обновить данные
+                    </a>
+                    <a href="{% url 'delete-account' %}" class="btn btn-danger btn-block">
+                        Удалить аккаунт
+                    </a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Ваши промокоды</h5>
+                    {% for promo in promocodes %}
+                    <div class="alert alert-success">
+                        <strong>{{ promo.code }}</strong> - скидка {{ promo.discount }}%
+                    </div>
+                    {% empty %}
+                    <div class="alert alert-info">Нет активных промокодов</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

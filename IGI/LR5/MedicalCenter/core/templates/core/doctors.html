@@ -1,0 +1,48 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Наши врачи{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Наши специалисты</h2>
+    <div class="row">
+        {% for doctor in doctors %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+                {% if doctor.photo %}
+                <img src="{{ doctor.photo.url }}" 
+                     class="card-img-top" 
+                     alt="{{ doctor.full_name }}"
+                     style="height: 250px; object-fit: cover;">
+                {% else %}
+                <div class="card-img-top bg-secondary" 
+                     style="height: 250px;"></div>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ doctor.full_name }}</h5>
+                    <p class="card-text">
+                        <span class="badge bg-primary">
+                            {{ doctor.department.name }}
+                        </span><br>
+                        Стаж: {{ doctor.experience }} лет<br>
+                        Специализации:
+                        {% for spec in doctor.specializations.all %}
+                            {{ spec.name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                    <a href="{% url 'doctor-detail' doctor.pk %}" 
+                       class="btn btn-primary stretched-link">
+                        Подробнее
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">Специалисты не найдены</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
